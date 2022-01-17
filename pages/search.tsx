@@ -3,8 +3,8 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
-  return <div className={styles.container}>Home Page</div>;
+const Search: NextPage = () => {
+  return <div className={styles.container}>Search Page</div>;
 };
 
-export default Home;
+export default Search;
