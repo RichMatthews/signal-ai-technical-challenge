@@ -1,14 +1,17 @@
-import type { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
+import type { NextPage } from 'next'
+import { useCallback, useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import axios from 'axios'
+import styles from '/styles/Show.module.css'
+import { ImageTextRow } from '/components/ImageTextRow'
+import YourSvg from '/assets/star.svg'
 
-const regex = /(<([^>]+)>)/gi;
+const regex = /(<([^>]+)>)/gi
 
 const Show: NextPage = () => {
-  const router = useRouter();
-  const { id } = router.query;
-  const [show, setShow] = useState();
+  const router = useRouter()
+  const { id } = router.query
+  const [show, setShow] = useState()
 
   const getEmbeddedShowDetails = useCallback(async () => {
     axios
@@ -23,71 +26,43 @@ const Show: NextPage = () => {
             ...data,
             cast,
             seasons,
-          };
-          setShow(amalgamatedData);
+          }
+          setShow(amalgamatedData)
         })
-      );
-  }, [id]);
+      )
+  }, [id])
 
   useEffect(() => {
     if (id) {
-      //   fetch(`https://api.tvmaze.com/shows/${id}`)
-      //     .then((res) => res.json())
-      //     .then((res) => setShow(res));
-      getEmbeddedShowDetails();
+      getEmbeddedShowDetails()
     }
-  }, [getEmbeddedShowDetails, id]);
+  }, [getEmbeddedShowDetails, id])
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "500px",
-        flexDirection: "column",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          background: "red",
-          width: "100%",
-        }}
-      >
-        <img src={show?.image?.medium} style={{ marginRight: "10px" }} />
-        <h2 style={{ margin: 0 }}>{show?.name}</h2>
-        <div>Favourite goes here</div>
-      </div>
-      <div>{show?.summary.replace(regex, "")}</div>
+    <div className={styles.container}>
+      <div className={styles.contentContainer}>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'flex-end',
+            width: '100%',
+          }}
+        >
+          <img src={show?.image?.medium} style={{ marginRight: '20px' }} />
+          <h2 style={{ margin: 0, marginRight: '20px' }}>{show?.name}</h2>
+          <YourSvg fill="red" onClick={() => console.log('favouriting')} />
+        </div>
 
-      <h3>Cast</h3>
-      <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
-        {show?.cast.map(({ person }) => (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <img src={person?.image.medium} style={{ width: "80px" }} />
-            {person?.name}
-          </div>
-        ))}
-      </div>
+        <div>{show?.summary.replace(regex, '')}</div>
 
-      <div>
-        {show?.seasons.map((season) => (
-          <>
-            <div>{season?.number}</div>
-          </>
-        ))}
+        <h3>Cast</h3>
+        <ImageTextRow data={show?.cast.map(x => x.person)} iterator="name" />
+
+        <h3>Seasons</h3>
+        <ImageTextRow data={show?.seasons} iterator="number" />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Show;
+export default Show

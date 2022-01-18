@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState, useMemo } from 'react'
 import { PreviousSearchContext } from '/context/PreviousSearch'
 import styles from '/styles/Home.module.css'
 
@@ -27,7 +27,7 @@ const Home: NextPage = () => {
     searchForShows()
   }, [searchForShows])
 
-  const searchHandler = e => {
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
 
@@ -50,6 +50,11 @@ const Home: NextPage = () => {
     // );
   }
 
+  const showNoShowsText = useMemo(
+    () => search.length > 0 && tvShows.length === 0,
+    [search.length, tvShows.length]
+  )
+
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
@@ -60,19 +65,23 @@ const Home: NextPage = () => {
           defaultValue={search}
         />
         <div className={styles.showsContainer}>
-          {tvShows?.map(({ show }: Show) => (
-            <Link href={`/shows/${show.id}`} key={show?.id} passHref>
-              <div className={styles.show}>
-                <div className={styles.imageContainer}>
-                  {renderPriorityImage(show?.image?.medium)}
+          {showNoShowsText ? (
+            <div>No TV Shows found</div>
+          ) : (
+            tvShows?.map(({ show }: Show) => (
+              <Link href={`/shows/${show.id}`} key={show?.id} passHref>
+                <div className={styles.show}>
+                  <div className={styles.imageContainer}>
+                    {renderPriorityImage(show?.image?.medium)}
+                  </div>
+                  <h4 className={styles.heading4}>{show?.name}</h4>
+                  <p className={styles.subHeading}>
+                    {show?.genres?.slice(0, 2).join(', ')}
+                  </p>
                 </div>
-                <h4 className={styles.heading4}>{show?.name}</h4>
-                <p className={styles.subHeading}>
-                  {show?.genres?.slice(0, 2).join(', ')}
-                </p>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </div>
