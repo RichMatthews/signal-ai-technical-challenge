@@ -38,7 +38,6 @@ const Show: NextPage = () => {
     }
   }, [getEmbeddedShowDetails, id]);
 
-  console.log(show?.seasons);
   return (
     <div
       style={{
@@ -66,16 +65,23 @@ const Show: NextPage = () => {
       <div>{show?.summary.replace(regex, "")}</div>
 
       <h3>Cast</h3>
-      <div>
+      <div style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         {show?.cast.map(({ person }) => (
-          <div>{person?.name}</div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <img src={person?.image.medium} style={{ width: "80px" }} />
+            {person?.name}
+          </div>
         ))}
       </div>
 
       <div>
         {show?.seasons.map((season) => (
           <>
-            {console.log(season)}
             <div>{season?.number}</div>
           </>
         ))}

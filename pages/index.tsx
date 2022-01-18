@@ -1,7 +1,8 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { PreviousSearchContext } from "../context/PreviousSearch";
 import styles from "../styles/Home.module.css";
 
 type Show = {
@@ -14,8 +15,13 @@ type Show = {
 };
 
 const Home: NextPage = () => {
-  const [search, setSearch] = useState("");
   const [tvShows, setTvShows] = useState([]);
+  const { search, setSearch } = useContext(PreviousSearchContext);
+
+  const setStateAndUpdateContext = (result) => {
+    console.log(result);
+    setSearch(result);
+  };
 
   const searchForShows = useCallback(() => {
     fetch(`https://api.tvmaze.com/search/shows?q=${search}`)
@@ -57,12 +63,12 @@ const Home: NextPage = () => {
           placeholder="Search for a tvshow"
           onChange={searchHandler}
           className={styles.input}
+          defaultValue={search}
         />
         <div className={styles.showsContainer}>
           {tvShows?.map(({ show }: Show) => (
             <Link href={`/shows/${show.id}`}>
               <div className={styles.show} key={show?.id}>
-                {console.log(show)}
                 <div className={styles.imageContainer}>
                   {renderPriorityImage(show?.image?.medium)}
                 </div>
