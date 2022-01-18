@@ -1,50 +1,44 @@
-import type { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { PreviousSearchContext } from "../context/PreviousSearch";
-import styles from "../styles/Home.module.css";
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { PreviousSearchContext } from '/context/PreviousSearch'
+import styles from '/styles/Home.module.css'
 
 type Show = {
-  id: string;
-  name: string;
-  genres: string[];
+  id: string
+  name: string
+  genres: string[]
   image: {
-    medium: string;
-  };
-};
+    medium: string
+  }
+}
 
 const Home: NextPage = () => {
-  const [tvShows, setTvShows] = useState([]);
-  const { search, setSearch } = useContext(PreviousSearchContext);
-
-  const setStateAndUpdateContext = (result) => {
-    console.log(result);
-    setSearch(result);
-  };
+  const [tvShows, setTvShows] = useState([])
+  const { search, setSearch } = useContext(PreviousSearchContext)
 
   const searchForShows = useCallback(() => {
     fetch(`https://api.tvmaze.com/search/shows?q=${search}`)
-      .then((res) => res.json())
-      .then((res) => setTvShows(res));
-  }, [search]);
+      .then(res => res.json())
+      .then(res => setTvShows(res))
+  }, [search])
 
   useEffect(() => {
-    searchForShows();
-  }, [searchForShows]);
+    searchForShows()
+  }, [searchForShows])
 
-  const searchHandler = (e) => {
-    setSearch(e.target.value);
-  };
+  const searchHandler = e => {
+    setSearch(e.target.value)
+  }
 
-  const renderPriorityImage = (medium) => {
+  const renderPriorityImage = (medium: string) => {
     return (
       <img
         alt="needsChanging"
-        src={medium ? medium : "/images/not-available.png"}
+        src={medium ? medium : '/images/not-available.png'}
         className={styles.showImage}
       />
-    );
+    )
     // return (
     //   <Image
     //     alt="needsChanging"
@@ -54,7 +48,7 @@ const Home: NextPage = () => {
     //     objectFit=""
     //   />
     // );
-  };
+  }
 
   return (
     <div className={styles.container}>
@@ -67,14 +61,14 @@ const Home: NextPage = () => {
         />
         <div className={styles.showsContainer}>
           {tvShows?.map(({ show }: Show) => (
-            <Link href={`/shows/${show.id}`}>
-              <div className={styles.show} key={show?.id}>
+            <Link href={`/shows/${show.id}`} key={show?.id} passHref>
+              <div className={styles.show}>
                 <div className={styles.imageContainer}>
                   {renderPriorityImage(show?.image?.medium)}
                 </div>
                 <h4 className={styles.heading4}>{show?.name}</h4>
                 <p className={styles.subHeading}>
-                  {show?.genres?.slice(0, 2).join(", ")}
+                  {show?.genres?.slice(0, 2).join(', ')}
                 </p>
               </div>
             </Link>
@@ -82,7 +76,7 @@ const Home: NextPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
