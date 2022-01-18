@@ -1,10 +1,11 @@
 import type { NextPage } from 'next'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import styles from '/styles/Show.module.css'
 import { ImageTextRow } from '/components/ImageTextRow'
-import YourSvg from '/assets/star.svg'
+import YourSvg from '/assets/star2.svg'
+import { FavouritesContext } from '@/context/Favourites'
 
 const regex = /(<([^>]+)>)/gi
 
@@ -12,6 +13,7 @@ const Show: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
   const [show, setShow] = useState()
+  const { favourites, toggleFavourites } = useContext(FavouritesContext)
 
   const getEmbeddedShowDetails = useCallback(async () => {
     axios
@@ -50,7 +52,22 @@ const Show: NextPage = () => {
         >
           <img src={show?.image?.medium} style={{ marginRight: '20px' }} />
           <h2 style={{ margin: 0, marginRight: '20px' }}>{show?.name}</h2>
-          <YourSvg fill="red" onClick={() => console.log('favouriting')} />
+          <YourSvg
+            fill={
+              favourites.filter(fave => fave.id === show?.id).length === 1
+                ? 'gold'
+                : 'white'
+            }
+            stroke={'black'}
+            strokeWidth="1"
+            onClick={() =>
+              toggleFavourites({
+                id: show?.id,
+                name: show?.name,
+                image: show?.image.medium,
+              })
+            }
+          />
         </div>
 
         <div>{show?.summary.replace(regex, '')}</div>

@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useCallback, useContext, useEffect, useState, useMemo } from 'react'
-import { PreviousSearchContext } from '/context/PreviousSearch'
+import { ImageWithText } from 'components/ImageWithText'
 import styles from '/styles/Show.module.css'
 
 type ImageTextRow<T> = {
@@ -19,16 +18,12 @@ export const ImageTextRow = <T,>({ data, iterator }: ImageTextRow<T>) => {
     >
       <div className={styles.showsContainer}>
         {data?.map(i => (
-          <div
+          <ImageWithText
             key={i?.id}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <img src={i?.image?.medium} style={{ width: '80px' }} />
-            {i?.[iterator]}
-          </div>
+            id={i?.id}
+            image={i?.image?.medium}
+            text={i?.[iterator]}
+          />
         ))}
       </div>
     </div>
