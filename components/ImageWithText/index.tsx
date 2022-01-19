@@ -8,12 +8,7 @@ type ImageWithTextProps = {
 
 export const ImageWithText = ({ image, text }: ImageWithTextProps) => (
   <div>
-    <Image
-      src={image}
-      alt="something"
-      size="small"
-      // style={{ marginBottom: '250px' }}
-    />
+    <Image src={image} alt="something" size="small" />
     <p>{text}</p>
   </div>
 )
