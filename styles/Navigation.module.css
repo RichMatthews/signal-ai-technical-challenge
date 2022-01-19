@@ -1,0 +1,19 @@
+.active {
+  text-decoration: underline;
+}
+
+.container {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.innerContainer {
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

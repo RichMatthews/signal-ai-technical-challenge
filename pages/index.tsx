@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { useCallback, useContext, useEffect, useState, useMemo } from 'react'
 import { PreviousSearchContext } from '/context/PreviousSearch'
 import styles from '/styles/Home.module.css'
+import layoutStyles from '/styles/Layout.module.css'
+
 import { Image } from 'components/Image'
 type Show = {
   id: string
@@ -50,15 +52,15 @@ const Home: NextPage = () => {
   )
 
   return (
-    <div className={styles.container}>
-      <div className={styles.contentContainer}>
+    <div className={layoutStyles.container}>
+      <div className={layoutStyles.contentContainer}>
         <input
           placeholder="Search for a tvshow"
           onChange={searchHandler}
           className={styles.input}
           defaultValue={search}
         />
-        <div className={styles.showsContainer}>
+        <div className={layoutStyles.layout5Grid}>
           {showNoShowsText ? (
             <div>No TV Shows found</div>
           ) : (

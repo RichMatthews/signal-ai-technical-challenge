@@ -1,17 +1,3 @@
-.container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.contentContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 500px;
-}
-
 .imageAndTitle {
   display: flex;
   align-items: flex-end;
@@ -19,13 +5,4 @@
   flex-direction: row;
   margin-top: 20px;
   margin-bottom: 20px;
-}
-
-.showsContainer {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  row-gap: 20px;
-  width: 100%;
 }

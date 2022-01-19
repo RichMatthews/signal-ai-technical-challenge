@@ -1,26 +1,19 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import styles from '/styles/Navigation.module.css'
 
 export const Navigation = () => {
+  const router = useRouter()
+
   return (
-    <div
-      style={{
-        backgroundColor: 'black',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'space-around',
-        padding: '10px',
-      }}
-    >
-      <div
-        style={{
-          width: '500px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-around',
-        }}
-      >
-        <Link href="/">Home</Link>
-        <Link href="/favourites">Favourites</Link>
+    <div className={styles.container}>
+      <div className={styles.innerContainer}>
+        <div className={router.pathname === '/' ? styles.active : ''}>
+          <Link href="/">Home</Link>
+        </div>
+        <div className={router.pathname === '/favourites' ? styles.active : ''}>
+          <Link href="/favourites">Favourites</Link>
+        </div>
       </div>
     </div>
   )

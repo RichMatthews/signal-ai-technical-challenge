@@ -7,16 +7,8 @@ type ImageWithTextProps = {
 }
 
 export const ImageWithText = ({ id, image, text }: ImageWithTextProps) => (
-  <div
-    key={id}
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-    }}
-  >
-    <Image src={image} alt="something" />
-    {text}
+  <div key={id}>
+    <Image src={image} alt="something" size="small" />
+    <p>{text}</p>
   </div>
 )
-
-//    <Image src={image} style={{ width: '80px' }} />

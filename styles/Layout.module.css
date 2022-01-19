@@ -1,3 +1,12 @@
+@media screen and (max-width: 600px) {
+  .layout5Grid {
+    display: grid;
+    margin: 5px;
+    column-gap: 10px;
+    grid-template-columns: repeat(3, auto);
+  }
+}
+
 .container {
   display: flex;
   align-items: center;
@@ -14,11 +23,8 @@
 
 .layout5Grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-  row-gap: 20px;
-  width: 100%;
+  column-gap: 70px;
+  grid-template-columns: repeat(3, auto);
 }
 
 .imageContainer {
@@ -29,15 +35,15 @@
 
 .smallImageContainer {
   width: 80px;
-  height: 100px;
+  height: 120px;
 }
 
 .normalImageContainer {
   width: 120px;
-  height: 140px;
+  height: 160px;
 }
 
 .largeImageContainer {
   width: 160px;
-  height: 180px;
+  height: 200px;
 }

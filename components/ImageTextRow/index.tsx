@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-import Link from 'next/link'
 import { ImageWithText } from 'components/ImageWithText'
 import styles from '/styles/Show.module.css'
 
