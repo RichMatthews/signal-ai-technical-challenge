@@ -1,3 +1,5 @@
+import { Image } from 'components/Image'
+
 type ImageWithTextProps = {
   id: number
   image: string
@@ -12,7 +14,9 @@ export const ImageWithText = ({ id, image, text }: ImageWithTextProps) => (
       flexDirection: 'column',
     }}
   >
-    <img src={image} style={{ width: '80px' }} />
+    <Image src={image} alt="something" />
     {text}
   </div>
 )
+
+//    <Image src={image} style={{ width: '80px' }} />

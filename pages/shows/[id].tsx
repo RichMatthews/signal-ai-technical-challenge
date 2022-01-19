@@ -1,11 +1,10 @@
 import axios from 'axios'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useMemo, useEffect, useState } from 'react'
-import styles from '/styles/Show.module.css'
+import { useCallback, useContext, useEffect, useState } from 'react'
+import { ShowHeader } from 'components/ShowHeader'
 import layoutStyles from '/styles/Show.module.css'
 import { ImageTextRow } from '../../components/ImageTextRow'
-import YourSvg from '/assets/star2.svg'
 import { FavouritesContext } from '@/context/Favourites'
 import type { Show } from 'types'
 
@@ -41,30 +40,22 @@ const Show: NextPage = () => {
       getEmbeddedShowDetails()
     }
   }, [getEmbeddedShowDetails, id])
-
+  console.log(show)
   return (
     <div className={layoutStyles.container}>
       <div className={layoutStyles.contentContainer}>
-        <div className={layoutStyles.imageAndTitle}>
-          <img src={show?.image?.medium} style={{ marginRight: '20px' }} />
-          <h2 style={{ margin: 0, marginRight: '20px' }}>{show?.name}</h2>
-          <YourSvg
-            fill={
-              favourites.filter(fave => fave.id === show?.id).length === 1
-                ? 'gold'
-                : 'white'
-            }
-            stroke={'black'}
-            strokeWidth="1"
-            onClick={() =>
-              toggleFavourite({
-                id: show?.id,
-                name: show?.name,
-                image: show?.image.medium,
-              })
-            }
-          />
-        </div>
+        <ShowHeader
+          image={show?.image?.medium}
+          id={show?.id}
+          name={show?.name}
+          onToggle={() =>
+            toggleFavourite({
+              id: show?.id,
+              name: show?.name,
+              image: show?.image.medium,
+            })
+          }
+        />
 
         <div>{show?.summary && show?.summary.replace(regex, '')}</div>
 

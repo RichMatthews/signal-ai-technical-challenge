@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useCallback, useContext, useEffect, useState, useMemo } from 'react'
 import { PreviousSearchContext } from '/context/PreviousSearch'
 import styles from '/styles/Home.module.css'
-
+import { Image } from 'components/Image'
 type Show = {
   id: string
   name: string
@@ -32,13 +32,7 @@ const Home: NextPage = () => {
   }
 
   const renderPriorityImage = (medium: string) => {
-    return (
-      <img
-        alt="needsChanging"
-        src={medium ? medium : '/images/not-available.png'}
-        className={styles.showImage}
-      />
-    )
+    return <Image alt="needsChanging" src={medium} />
     // return (
     //   <Image
     //     alt="needsChanging"

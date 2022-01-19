@@ -13,9 +13,12 @@
 }
 
 .imageAndTitle {
-  display: 'flex';
-  align-items: 'flex-end';
-  width: '100%';
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  flex-direction: row;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .showsContainer {

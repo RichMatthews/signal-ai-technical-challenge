@@ -1,8 +1,9 @@
 import { useContext } from 'react'
 import { FavouritesContext } from '@/context/Favourites'
+import { Image } from 'components/Image'
 import type { NextPage } from 'next'
-import styles from '../styles/Home.module.css'
 import type { Favourite } from 'types'
+import styles from '../styles/Home.module.css'
 
 const Favourites: NextPage = () => {
   const { favourites } = useContext(FavouritesContext)
@@ -11,11 +12,11 @@ const Favourites: NextPage = () => {
     <div className={styles.container}>
       <div className={styles.contentContainer}>
         <h3>Favourites</h3>
-        {favourites ? (
+        {favourites.length > 0 ? (
           favourites.map((favourite: Favourite) => (
             <div key={favourite.id}>
               <div>{favourite?.name}</div>
-              <img src={favourite?.image} />
+              <Image src={favourite?.image} alt="change" />
             </div>
           ))
         ) : (
