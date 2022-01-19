@@ -1,19 +1,11 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useCallback, useContext, useEffect, useState, useMemo } from 'react'
-import { PreviousSearchContext } from '/context/PreviousSearch'
+import { PreviousSearchContext } from '@/context/PreviousSearch'
 import styles from '/styles/Home.module.css'
 import layoutStyles from '/styles/Layout.module.css'
-
 import { Image } from 'components/Image'
-type Show = {
-  id: string
-  name: string
-  genres: string[]
-  image: {
-    medium: string
-  }
-}
+import type { Show } from 'types'
 
 const Home: NextPage = () => {
   const [tvShows, setTvShows] = useState([])
@@ -33,19 +25,6 @@ const Home: NextPage = () => {
     setSearch(e.target.value)
   }
 
-  const renderPriorityImage = (medium: string) => {
-    return <Image alt="needsChanging" src={medium} />
-    // return (
-    //   <Image
-    //     alt="needsChanging"
-    //     src={original ? original : medium ? medium : ""}
-    //     // className={styles.showImage}
-    //     layout="fill"
-    //     objectFit=""
-    //   />
-    // );
-  }
-
   const showNoShowsText = useMemo(
     () => search.length > 0 && tvShows.length === 0,
     [search.length, tvShows.length]
@@ -60,25 +39,23 @@ const Home: NextPage = () => {
           className={styles.input}
           defaultValue={search}
         />
-        <div className={layoutStyles.layout5Grid}>
-          {showNoShowsText ? (
-            <div>No TV Shows found</div>
-          ) : (
-            tvShows?.map(({ show }: Show) => (
+        {showNoShowsText ? (
+          <div>No TV Shows found</div>
+        ) : (
+          <div className={layoutStyles.layout3Grid}>
+            {tvShows?.map(({ show }: { show: Show }) => (
               <Link href={`/shows/${show.id}`} key={show?.id} passHref>
                 <div className={styles.show}>
-                  <div className={styles.imageContainer}>
-                    {renderPriorityImage(show?.image?.medium)}
-                  </div>
+                  <Image alt="needsChanging" src={show?.image?.medium} />
                   <h4 className={styles.heading4}>{show?.name}</h4>
                   <p className={styles.subHeading}>
                     {show?.genres?.slice(0, 2).join(', ')}
                   </p>
                 </div>
               </Link>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

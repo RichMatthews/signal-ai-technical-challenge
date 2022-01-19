@@ -1,5 +1,5 @@
 import { createContext } from 'react'
-import type { Favourite } from '../types'
+import type { Favourite } from 'types'
 
 export type Favourites = {
   favourites: Favourite[]

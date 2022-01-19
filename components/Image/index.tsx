@@ -1,11 +1,12 @@
 import NextImage from 'next/image'
 import { useMemo } from 'react'
-import styles from '/styles/Layout.module.css'
+import styles from '/styles/Images.module.css'
 
 type ImageProps = {
   alt: string
-  src: string
+  src?: string
   size?: 'small' | 'normal' | 'large'
+  style?: any
 }
 
 export const Image = ({ alt, src, size = 'normal' }: ImageProps) => {

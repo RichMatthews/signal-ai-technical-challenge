@@ -4,7 +4,7 @@ import { PreviousSearchContext } from '@/context/PreviousSearch'
 import { FavouritesContext } from '@/context/Favourites'
 import { Navigation } from 'components/Navigation'
 import type { Favourite } from 'types'
-import '../styles/globals.css'
+import '/styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [search, setSearch] = useState('')

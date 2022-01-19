@@ -1,14 +1,19 @@
 import { Image } from 'components/Image'
+import styles from '/styles/Images.module.css'
 
 type ImageWithTextProps = {
-  id: number
   image: string
   text: string
 }
 
-export const ImageWithText = ({ id, image, text }: ImageWithTextProps) => (
-  <div key={id}>
-    <Image src={image} alt="something" size="small" />
+export const ImageWithText = ({ image, text }: ImageWithTextProps) => (
+  <div>
+    <Image
+      src={image}
+      alt="something"
+      size="small"
+      // style={{ marginBottom: '250px' }}
+    />
     <p>{text}</p>
   </div>
 )

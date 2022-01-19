@@ -15,35 +15,17 @@
 }
 
 .contentContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 500px;
+}
+
+.layout3Grid {
+  display: grid;
+  column-gap: 70px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .layout5Grid {
   display: grid;
-  column-gap: 70px;
-  grid-template-columns: repeat(3, auto);
-}
-
-.imageContainer {
-  border-radius: 5px;
-  position: relative;
-  overflow: hidden;
-}
-
-.smallImageContainer {
-  width: 80px;
-  height: 120px;
-}
-
-.normalImageContainer {
-  width: 120px;
-  height: 160px;
-}
-
-.largeImageContainer {
-  width: 160px;
-  height: 200px;
+  column-gap: 10px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
