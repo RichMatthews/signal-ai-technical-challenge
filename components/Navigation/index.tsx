@@ -1,18 +1,6 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import styles from '/styles/Navigation.module.css'
-import * as nextRouter from 'next/router'
-
-jest.mock('next/router', () => ({
-  useRouter() {
-    return {
-      route: '/',
-      pathname: '',
-      query: '',
-      asPath: '',
-    }
-  },
-}))
 
 export const Navigation = () => {
   const router = useRouter()

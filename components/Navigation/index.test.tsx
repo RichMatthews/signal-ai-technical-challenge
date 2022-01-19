@@ -3,7 +3,14 @@ import { render, screen } from '@testing-library/react'
 import { Navigation } from './index'
 
 jest.mock('next/router', () => ({
-  useRouter: jest.fn(),
+  useRouter() {
+    return {
+      route: '/',
+      pathname: '',
+      query: '',
+      asPath: '',
+    }
+  },
 }))
 
 describe('Navigation Component', () => {

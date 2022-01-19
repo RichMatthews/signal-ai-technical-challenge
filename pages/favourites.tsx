@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { FavouritesContext } from '@/context/Favourites'
 import type { NextPage } from 'next'
-import styles from '/styles/Home.module.css'
+import styles from '/styles/Layout.module.css'
 import { ImageTextRow } from 'components/ImageTextRow'
 
 const Favourites: NextPage = () => {
@@ -9,13 +9,13 @@ const Favourites: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.contentContainer}>
-        {favourites.length > 0 ? (
+      {favourites.length > 0 ? (
+        <div className={styles.contentContainer}>
           <ImageTextRow data={favourites} iterator="name" title="Favourites" />
-        ) : (
-          <div>Your favourites will appear here</div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div>Your favourites will appear here</div>
+      )}
     </div>
   )
 }
