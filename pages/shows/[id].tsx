@@ -1,19 +1,21 @@
-import type { NextPage } from 'next'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import axios from 'axios'
+import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useCallback, useContext, useMemo, useEffect, useState } from 'react'
 import styles from '/styles/Show.module.css'
-import { ImageTextRow } from '/components/ImageTextRow'
+import layoutStyles from '/styles/Show.module.css'
+import { ImageTextRow } from '../../components/ImageTextRow'
 import YourSvg from '/assets/star2.svg'
 import { FavouritesContext } from '@/context/Favourites'
+import type { Show } from 'types'
 
 const regex = /(<([^>]+)>)/gi
 
 const Show: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
-  const [show, setShow] = useState()
-  const { favourites, toggleFavourites } = useContext(FavouritesContext)
+  const [show, setShow] = useState<Show>()
+  const { favourites, toggleFavourite } = useContext(FavouritesContext)
 
   const getEmbeddedShowDetails = useCallback(async () => {
     axios
@@ -41,15 +43,9 @@ const Show: NextPage = () => {
   }, [getEmbeddedShowDetails, id])
 
   return (
-    <div className={styles.container}>
-      <div className={styles.contentContainer}>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            width: '100%',
-          }}
-        >
+    <div className={layoutStyles.container}>
+      <div className={layoutStyles.contentContainer}>
+        <div className={layoutStyles.imageAndTitle}>
           <img src={show?.image?.medium} style={{ marginRight: '20px' }} />
           <h2 style={{ margin: 0, marginRight: '20px' }}>{show?.name}</h2>
           <YourSvg
@@ -61,7 +57,7 @@ const Show: NextPage = () => {
             stroke={'black'}
             strokeWidth="1"
             onClick={() =>
-              toggleFavourites({
+              toggleFavourite({
                 id: show?.id,
                 name: show?.name,
                 image: show?.image.medium,
@@ -70,13 +66,23 @@ const Show: NextPage = () => {
           />
         </div>
 
-        <div>{show?.summary.replace(regex, '')}</div>
+        <div>{show?.summary && show?.summary.replace(regex, '')}</div>
 
-        <h3>Cast</h3>
-        <ImageTextRow data={show?.cast.map(x => x.person)} iterator="name" />
+        {show?.cast && show.cast.length > 0 && (
+          <ImageTextRow
+            data={show?.cast.map(x => x.person)}
+            iterator="name"
+            title="Cast"
+          />
+        )}
 
-        <h3>Seasons</h3>
-        <ImageTextRow data={show?.seasons} iterator="number" />
+        {show?.seasons && show?.seasons?.length > 0 && (
+          <ImageTextRow
+            data={show?.seasons}
+            iterator="number"
+            title="Seasons"
+          />
+        )}
       </div>
     </div>
   )

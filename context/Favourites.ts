@@ -1,8 +1,9 @@
 import { createContext } from 'react'
+import type { Favourite } from '../types'
 
 export type Favourites = {
-  favourites: []
-  toggleFavourite: any //change this
+  favourites: Favourite[]
+  toggleFavourite: ({ id, name, image }: Favourite) => void
 }
 
 export const FavouritesContext = createContext<Favourites>({
