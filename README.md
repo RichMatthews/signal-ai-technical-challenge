@@ -9,6 +9,7 @@ cd into the directory and run the app
 
 ```
 cd signal-ai-technical-challenge
+yarn
 yarn dev
 ```
 
