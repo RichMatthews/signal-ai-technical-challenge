@@ -1,12 +1,12 @@
 import { useContext, useMemo } from 'react'
-import { FavouritesContext } from '@/context/Favourites'
+import { FavouritesContext } from 'context/Favourites'
 import { Image } from 'components/Image'
 import styles from '/styles/Show.module.css'
 import YourSvg from '/assets/star.svg'
 
 type ShowHeaderProps = {
   name: string
-  id: string
+  id: number
   image?: string
   onToggle: () => void
 }

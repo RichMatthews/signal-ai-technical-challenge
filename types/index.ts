@@ -3,7 +3,7 @@ type ShowImage = {
 }
 
 export type Favourite = {
-  id: string
+  id: number
   name: string
   image?: ShowImage
 }
@@ -18,7 +18,7 @@ export type Season = {
 
 export type Show = {
   cast?: Cast[]
-  id: string
+  id: number
   genres: string[]
   name: string
   image?: ShowImage

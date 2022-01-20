@@ -4,16 +4,16 @@ import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ShowHeader } from 'components/ShowHeader'
 import { ImageTextRow } from 'components/ImageTextRow'
 import layoutStyles from '/styles/Layout.module.css'
-import { FavouritesContext } from '@/context/Favourites'
-import type { Show, Season } from 'types'
+import { FavouritesContext } from 'context/Favourites'
+import type { Show as ShowType, Season } from 'types'
 
 const regex = /(<([^>]+)>)/gi
 
-const Show = () => {
+export const Show = () => {
   const router = useRouter()
-  const { id } = router.query
-  const [show, setShow] = useState<Show>()
-  const [loading, setLoading] = useState<boolean>()
+  const { id } = router?.query
+  const [show, setShow] = useState<ShowType>()
+  const [loading, setLoading] = useState(false)
   const { toggleFavourite } = useContext(FavouritesContext)
 
   const getEmbeddedShowDetails = useCallback(async () => {
@@ -45,6 +45,7 @@ const Show = () => {
   }, [getEmbeddedShowDetails, id])
 
   const renderCorrectContentState = useMemo(() => {
+    console.log(loading)
     if (loading) {
       return (
         <div className={layoutStyles.container}>

@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import { FavouritesContext } from '@/context/Favourites'
+import { FavouritesContext } from 'context/Favourites'
 import type { NextPage } from 'next'
 import styles from '/styles/Layout.module.css'
 import { ImageTextRow } from 'components/ImageTextRow'
 
-const Favourites: NextPage = () => {
+export const Favourites: NextPage = () => {
   const { favourites } = useContext(FavouritesContext)
 
   return (
