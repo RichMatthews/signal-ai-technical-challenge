@@ -13,6 +13,12 @@ yarn
 yarn dev
 ```
 
+## Testing
+
+I've written a few tests, normally I'd obviously write more and expect a high level of code coverage
+`yarn test` to run them all
+
+
 ## Tools & approach used
 
 - I've decided to use Next JS to build the app out, for two main reasons
@@ -26,6 +32,5 @@ yarn dev
 ## Things to improve in the future
 
 - I would add the ability to remove a favourite from the favourite screen and maybe to group or filter them
-- I would write more tests. Obviously normally I would expect a high level of code coverage but for the purposes of this tets, a few will suffice
 - I added some basic error handling but with more time I would like to flesh this out a bit more
 - I added some basic loading states but I would also improve this and make it better visually going forward
