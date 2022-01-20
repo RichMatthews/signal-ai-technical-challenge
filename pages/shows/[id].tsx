@@ -1,19 +1,19 @@
 import axios from 'axios'
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { ShowHeader } from 'components/ShowHeader'
 import { ImageTextRow } from 'components/ImageTextRow'
 import layoutStyles from '/styles/Layout.module.css'
 import { FavouritesContext } from '@/context/Favourites'
-import type { Cast, Show, Season } from 'types'
+import type { Show, Season } from 'types'
 
 const regex = /(<([^>]+)>)/gi
 
-const Show: NextPage = () => {
+const Show = () => {
   const router = useRouter()
   const { id } = router.query
   const [show, setShow] = useState<Show>()
+  const [loading, setLoading] = useState<boolean>()
   const { toggleFavourite } = useContext(FavouritesContext)
 
   const getEmbeddedShowDetails = useCallback(async () => {
@@ -31,58 +31,79 @@ const Show: NextPage = () => {
             seasons,
           }
           setShow(generatedAmalgamatedData)
+          setLoading(false)
         })
       )
-  }, [id])
+      .catch(() => router.push('/404'))
+  }, [id, router])
 
   useEffect(() => {
+    setLoading(true)
     if (id) {
       getEmbeddedShowDetails()
     }
   }, [getEmbeddedShowDetails, id])
 
-  return show?.id ? (
-    <div className={layoutStyles.container}>
-      <div className={layoutStyles.contentContainer}>
-        <ShowHeader
-          image={show?.image?.medium}
-          id={show?.id}
-          name={show.name}
-          onToggle={() =>
-            toggleFavourite({
-              id: show?.id,
-              name: show?.name,
-              image: {
-                medium: show?.image?.medium,
-              },
-            })
-          }
-        />
+  const renderCorrectContentState = useMemo(() => {
+    if (loading) {
+      return (
+        <div className={layoutStyles.container}>
+          Fetching show information...
+        </div>
+      )
+    }
 
-        <div>{show?.summary && show?.summary.replace(regex, '')}</div>
+    if (!loading && !show?.id) {
+      return (
+        <div className={layoutStyles.container}>
+          We could not fine the relevant page
+        </div>
+      )
+    }
 
-        {show?.cast && show.cast.length > 0 && (
-          <ImageTextRow<string>
-            data={show?.cast.map(x => x.person)}
-            iterator="name"
-            title="Cast"
-          />
-        )}
+    return (
+      show?.id && (
+        <div className={layoutStyles.container}>
+          <div className={layoutStyles.contentContainer}>
+            <ShowHeader
+              image={show?.image?.medium}
+              id={show?.id}
+              name={show?.name}
+              onToggle={() =>
+                toggleFavourite({
+                  id: show?.id,
+                  name: show?.name,
+                  image: {
+                    medium: show?.image?.medium,
+                  },
+                })
+              }
+            />
 
-        {show?.seasons && show?.seasons?.length > 0 && (
-          <ImageTextRow<Season>
-            data={show?.seasons}
-            iterator="number"
-            title="Seasons"
-          />
-        )}
-      </div>
-    </div>
-  ) : (
-    <div className={layoutStyles.container}>
-      We could not fine the relevant page
-    </div>
-  )
+            <div>{show?.summary && show?.summary.replace(regex, '')}</div>
+
+            {show?.cast && show.cast.length > 0 && (
+              <ImageTextRow<string>
+                data={show?.cast.map(x => x.person)}
+                iterator="name"
+                title="Cast"
+              />
+            )}
+
+            {show?.seasons && show?.seasons?.length > 0 && (
+              <ImageTextRow<Season>
+                data={show?.seasons}
+                iterator="number"
+                title="Seasons"
+              />
+            )}
+          </div>
+        </div>
+      )
+    )
+  }, [loading, show, toggleFavourite])
+
+  return renderCorrectContentState
 }
 
 export default Show
