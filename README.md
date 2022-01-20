@@ -26,3 +26,5 @@ yarn dev
 
 - I would add the ability to remove a favourite from the favourite screen and maybe to group or filter them
 - I would write more tests. Obviously normally I would expect a high level of code coverage but for the purposes of this tets, a few will suffice
+- I added some basic error handling but with more time I would like to flesh this out a bit more
+- I added some basic loading states but I would also improve this and make it better visually going forward
