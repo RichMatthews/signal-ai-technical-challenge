@@ -11,6 +11,7 @@ cd into the directory and run the app
 cd signal-ai-technical-challenge
 yarn
 yarn dev
+Go to http://localhost:3000/ in browser to view app
 ```
 
 ## Testing
